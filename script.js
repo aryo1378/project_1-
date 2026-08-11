@@ -1,6 +1,15 @@
-// Project 1 code
-
 const numberOfFilms = +prompt('How much movies have you already watched?');
+
+function checkMovieCount() {
+    if (numberOfFilms < 10) {
+        alert('small');
+    } else if (numberOfFilms <= 30) {
+        alert('normal');
+    } else {
+        alert('huge');
+    }
+}
+ checkMovieCount();
 
 const personalMovieDB = {
     count: numberOfFilms,
@@ -14,14 +23,34 @@ const personalMovieDB = {
     privat: false
 };
 
+function getMovieInfo() {
+    for (let m = 0; m < 2; m++) {
 
-const answer1 = prompt('Last movie watched?');
-const answer2 = +prompt('How would you rate it on a scale 1-10?');
+        const title = prompt('Last movie watched?');
 
-const answer3 = prompt('Last movie watched?');
-const answer4 = +prompt('How would you rate it on a scale 1-10?');
+        if (title === null) {
+            alert('Please enter a movie name.');
+            continue;
+        } else if (title.length  === 0) {
+            alert('Can`t be empty.');
+        } else if(title.length > 50) {
+            alert('Yo! Hold on!');
+        }
 
-personalMovieDB.movies[answer1] = answer2;
-personalMovieDB.movies[answer3] = answer4;
+        const rating = prompt('How would you rate it? 1-10');
+        if (rating === null) {
+            alert('Please enter a rating.');
+        } else if (rating.length  === 0) {
+            alert('Can`t be empty.');
+        } else if(rating.length > 50) {
+            alert('Yo! Hold on!');
+        }
 
+        personalMovieDB.movies[title] = rating;
+    }
+}
+
+
+
+getMovieInfo();
 console.log(personalMovieDB);
