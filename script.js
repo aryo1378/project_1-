@@ -1,15 +1,4 @@
-const numberOfFilms = +prompt('How much movies have you already watched?');
-
-function checkMovieCount() {
-    if (numberOfFilms < 10) {
-        alert('small');
-    } else if (numberOfFilms <= 30) {
-        alert('normal');
-    } else {
-        alert('huge');
-    }
-}
- checkMovieCount();
+let numberOfFilms;
 
 const personalMovieDB = {
     count: numberOfFilms,
@@ -23,7 +12,39 @@ const personalMovieDB = {
     privat: false
 };
 
-function getMovieInfo() {
+function start() {
+    numberOfFilms = +prompt('How much movies have you already watched?');
+    personalMovieDB.count = numberOfFilms;
+
+    while(numberOfFilms == '' || numberOfFilms == null || isNaN(numberOfFilms)) {
+        numberOfFilms = +prompt('How much movies have you already watched?');
+        personalMovieDB.count = numberOfFilms;
+    }
+}
+
+function detectPersonalLevel() {
+    if (numberOfFilms < 10) {
+        alert('small');
+    } else if (numberOfFilms <= 30) {
+        alert('normal');
+    } else {
+        alert('huge');
+    }
+}
+
+function showMyDB() {
+    if (personalMovieDB.privat === false) {
+        console.log(personalMovieDB);
+    }
+}
+
+function writeYourGenres() {
+    for (let k = 1; k <= 3; k++) {
+        personalMovieDB.genres[k - 1]  = prompt(`Your favourite movie number ${k}?`);
+    }
+}
+
+function rememberMyFilms() {
     for (let m = 0; m < 2; m++) {
 
         const title = prompt('Last movie watched?');
@@ -50,7 +71,8 @@ function getMovieInfo() {
     }
 }
 
-
-
-getMovieInfo();
-console.log(personalMovieDB);
+start();
+detectPersonalLevel();
+rememberMyFilms();
+writeYourGenres();
+showMyDB();
