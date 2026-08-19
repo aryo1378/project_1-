@@ -9,20 +9,17 @@ const personalMovieDB = {
 
     },
     genres: [],
-    privat: false
-};
-
-function start() {
+    privat: false,
+    start() {
     numberOfFilms = +prompt('How much movies have you already watched?');
-    personalMovieDB.count = numberOfFilms;
+    this.count = numberOfFilms;
 
     while(numberOfFilms == '' || numberOfFilms == null || isNaN(numberOfFilms)) {
         numberOfFilms = +prompt('How much movies have you already watched?');
-        personalMovieDB.count = numberOfFilms;
+        this.count = numberOfFilms;
     }
-}
-
-function detectPersonalLevel() {
+    },
+    detectPersonalLevel() {
     if (numberOfFilms < 10) {
         alert('small');
     } else if (numberOfFilms <= 30) {
@@ -30,29 +27,38 @@ function detectPersonalLevel() {
     } else {
         alert('huge');
     }
-}
-
-function showMyDB() {
-    if (personalMovieDB.privat === false) {
-        console.log(personalMovieDB);
+    },
+    showMyDB() {
+    if (this.privat === false) {
+        console.log(this);
     }
-}
-
-function writeYourGenres() {
+    },
+    writeYourGenres() {
     for (let k = 1; k <= 3; k++) {
-        personalMovieDB.genres[k - 1]  = prompt(`Your favourite movie number ${k}?`);
+        let response = prompt(`Your favourite movie number ${k}?`);
+        while (response === null || response.trim() === '') {
+            response = prompt(`Your favourite movie number ${k}?`);
+        }
+        this.genres[k - 1] = response;
+        
     }
-}
-
-function rememberMyFilms() {
+    this.genres.forEach(function(genre, index) {
+            console.log(`Favorite genre #${index + 1} is ${genre}`);
+        })
+    },
+    rememberMyFilms() {
     for (let m = 0; m < 2; m++) {
 
-        const title = prompt('Last movie watched?');
+        let title = prompt('Last movie watched?');
 
         if (title === null) {
             alert('Please enter a movie name.');
             continue;
-        } else if (title.length  === 0) {
+        } 
+
+        title = title.trim();
+
+        if (title.length  === 0) {
             alert('Can`t be empty.');
         } else if(title.length > 50) {
             alert('Yo! Hold on!');
@@ -67,12 +73,13 @@ function rememberMyFilms() {
             alert('Yo! Hold on!');
         }
 
-        personalMovieDB.movies[title] = rating;
+        this.movies[title] = rating;
     }
-}
+    },
+    toggleVisibleMyDB() {
+        this.privat = !this.privat;
+    }
+};
 
-start();
-detectPersonalLevel();
-rememberMyFilms();
-writeYourGenres();
-showMyDB();
+personalMovieDB.showMyDB();
+personalMovieDB.toggleVisibleMyDB();
